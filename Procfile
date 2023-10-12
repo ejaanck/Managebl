@@ -1,1 +1,1 @@
-bash: python3 -m PyroUbot
+bash: python3 -m wbb
