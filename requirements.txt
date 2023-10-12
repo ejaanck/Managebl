@@ -1,4 +1,5 @@
 async_generator
+httpcore
 asyncurban
 beautifulsoup4
 bitlyshortener
