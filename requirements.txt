@@ -12,6 +12,7 @@ dnspython
 emoji==1.7.0
 faker
 ffmpeg-python
+motor
 fontTools
 geopy
 gitpython
