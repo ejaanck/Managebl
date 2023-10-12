@@ -2,4 +2,4 @@ build:
   docker:
       wbb: Dockerfile
 run:
-   wbb: bash start
+  worker: python3 -m wbb
