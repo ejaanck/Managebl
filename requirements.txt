@@ -16,7 +16,6 @@ ffmpeg-python
 trio
 asyncio
 socks
-http2
 motor
 fontTools
 geopy
