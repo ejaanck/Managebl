@@ -3,10 +3,10 @@
   "description": "WilliamButcherBot",
   "logo": "",
   "keywords": ["telegram", "userbot", "WilliamButcherBot", "modular", "python"],
-  "repository": " ",
+  "repository": "https://github.com/nvaardian/WilliamButcherBot",
   "stack": "container",
   "env": {
-    "API_KEY": {
+    "API_ID": {
       "description": "Dapatkan API KEY di Grup » https://t.me/AyiinChats » Lalu ketik /get api atau di web my.telegram.org Masukan yg APP ID Telegram",
       "required": true
     },
@@ -14,7 +14,7 @@
       "description": "Dapatkan API Hash di Grup » https://t.me/AyiinChats » Lalu ketik /get api atau di web my.telegram.org",
       "required": true
     },
-    "STRING_SESSION": {
+    "SESSION_STRING": {
       "description": "Dapatkan String Session di Grup » https://t.me/AyiinChats » Lalu ketik /get string",
       "required": true
     },
@@ -26,8 +26,48 @@
       "description": "Ambil Heroku API KEY mu disini » https://dashboard.heroku.com/account",
       "required": true
     },
-    "": {
-      "description": "Ambil key OPENAI_API_KEY mu disini » https://platform.openai.com/account/api-keys",
+    "ARQ_API_KEY": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "LOG_GROUP_ID": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "GBAN_LOG_GROUP_ID": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "MONGO_URL": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "MESSAGE_DUMP_CHAT": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "LOG_MENTIONS": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "RSS_DELAY": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "PM_PERMIT": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "WELCOME_DELAY_KICK_SEC": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "USERBOT_PREFIX": {
+      "description": "Ambilmu disini » ",
+      "required": false
+    },
+    "SUDO_USERS_ID": {
+      "description": "Ambilmu disini » ",
       "required": false
     }
   },
