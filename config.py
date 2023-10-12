@@ -1,8 +1,17 @@
 import os
-
+from os import getenv
 from dotenv import load_dotenv
+from distutils.util import strtobool as sb
+from base64 import b64decode
 
-load_dotenv("config.env" if os.path.isfile("config.env") else "sample_config.env")
+load_dotenv()
+
+
+
+DEVS = [
+  6302436328, #sy
+]
+class Config(object):
 
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 API_ID = int(os.environ.get('API_ID'))
