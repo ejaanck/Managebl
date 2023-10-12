@@ -46,14 +46,14 @@ __HELP__ = """
 """
 
 
-@app.on_message(filters.command("blacklist") & ~filters.private)
+@app.on_message(filters.command("bl") & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def save_filters(_, message):
     if len(message.command) < 2:
-        return await message.reply_text("Usage:\n/blacklist [WORD|SENTENCE]")
+        return await message.reply_text("Usage:\n/bl [WORD|SENTENCE]")
     word = message.text.split(None, 1)[1].strip()
     if not word:
-        return await message.reply_text("**Usage**\n__/blacklist [WORD|SENTENCE]__")
+        return await message.reply_text("**Usage**\n__/bl [WORD|SENTENCE]__")
     chat_id = message.chat.id
     await save_blacklist_filter(chat_id, word)
     await message.reply_text(f"__**Blacklisted {word}.**__")
