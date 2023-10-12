@@ -1,5 +1,5 @@
 build: 
   docker:
-      ayiin: Dockerfile
+      wbb: Dockerfile
 run:
-   ayiin: bash start
+   wbb: bash start
