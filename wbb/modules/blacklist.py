@@ -49,15 +49,46 @@ __HELP__ = """
 @app.on_message(filters.command("bl") & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def save_filters(_, message):
-    if len(message.command) < 2:
-        return await message.reply_text("Usage:\n/bl [WORD|SENTENCE]")
-    word = message.text.split(None, 1)[1].strip()
-    if not word:
-        return await message.reply_text("**Usage**\n__/bl [WORD|SENTENCE]__")
-    chat_id = message.chat.id
-    await save_blacklist_filter(chat_id, word)
-    await message.reply_text(f"__**Blacklisted {word}.**__")
+    chat = update.effective_chat
+    user = update.effective_user
+    args = context.args
 
+    conn = connected(context.bot, update, chat, user.id, need_admin=False)
+    if conn:
+        chat_id = conn
+        chat_name = dispatcher.bot.getChat(conn).title
+    else:
+        if chat.type == "private":
+            return
+        chat_id = update.effective_chat.id
+        chat_name = chat.title
+
+    filter_list = "Current blacklisted words in <b>{}</b>:\n".format(chat_name)
+
+    all_blacklisted = sql.get_chat_blacklist(chat_id)
+
+    if len(args) > 0 and args[0].lower() == "copy":
+        for trigger in all_blacklisted:
+            filter_list += "<code>{}</code>\n".format(html.escape(trigger))
+    else:
+        for trigger in all_blacklisted:
+            filter_list += " - <code>{}</code>\n".format(html.escape(trigger))
+
+    # for trigger in all_blacklisted:
+    #     filter_list += " - <code>{}</code>\n".format(html.escape(trigger))
+
+    split_text = split_message(filter_list)
+    for text in split_text:
+        if filter_list == "Current blacklisted words in <b>{}</b>:\n".format(
+            html.escape(chat_name),
+        ):
+            send_message(
+                update.effective_message,
+                "No blacklisted words in <b>{}</b>!".format(html.escape(chat_name)),
+                parse_mode=ParseMode.HTML,
+            )
+            return
+        send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
 
 @app.on_message(filters.command("blacklisted") & ~filters.private)
 @capture_err
