@@ -13,7 +13,10 @@ dnspython
 emoji==1.7.0
 faker
 ffmpeg-python
-upgrade httpcore
+trio
+asyncio
+socks
+http2
 motor
 fontTools
 geopy
