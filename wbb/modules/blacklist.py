@@ -58,6 +58,7 @@ async def save_filters(_, message: Message):
     else:
         words = message.text.split(None, 1)[1]
 
+
     if not words:
         return await message.reply_text("What should i blacklist?")
 
@@ -68,7 +69,8 @@ async def save_filters(_, message: Message):
         )
         for trigger in to_blacklist:
             await save_blacklist_filter(chat_id, trigger.lower())
-
+        if is_reply:
+            await message.reply_to_message.delete()
         if len(to_blacklist) == 1:
             await message.reply_text(
                 f"Added <code>{html.escape(to_blacklist[0])}</code> to the blacklist filters!",
@@ -116,6 +118,7 @@ async def del_filter(_, message):
 @capture_err
 async def blacklist_filters_re(_, message):
     text = message.text.lower().strip()
+    print(text)
     if not text:
         return
     chat_id = message.chat.id
@@ -125,6 +128,7 @@ async def blacklist_filters_re(_, message):
     if user.id in SUDOERS:
         return
     list_of_filters = await get_blacklisted_words(chat_id)
+    print(list_of_filters, text)
     for word in list_of_filters:
         pattern = r"( |^|[^\w])" + re.escape(word) + r"( |$|[^\w])"
         if re.search(pattern, text, flags=re.IGNORECASE):
