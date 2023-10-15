@@ -52,11 +52,15 @@ __HELP__ = """
 @adminsOnly("can_restrict_members")
 async def save_filters(_, message: Message):
     chat_id = message.chat.id
-    words = message.text.split(None, 1)[1]
-    if not words:
-        words = message.reply_to_message.text if message.reply_to_message else None
+    is_reply = True if message.reply_to_message else False
+    if is_reply:
+        words = message.reply_to_message.text if message.reply_to_message else message.text
+    else:
+        words = message.text.split(None, 1)[1]
+
     if not words:
         return await message.reply_text("What should i blacklist?")
+
     if len(words) > 1:
         text = words
         to_blacklist = list(
