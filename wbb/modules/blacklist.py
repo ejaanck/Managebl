@@ -118,9 +118,6 @@ async def del_filter(_, message):
 @capture_err
 async def blacklist_filters_re(_, message):
     text = message.text.lower().strip()
-    if "15menit" not in text:
-        return
-    print(text)
     if not text:
         return
     chat_id = message.chat.id
@@ -130,22 +127,13 @@ async def blacklist_filters_re(_, message):
     if user.id in SUDOERS:
         return
     list_of_filters = await get_blacklisted_words(chat_id)
-    print(list_of_filters, text)
     for word in list_of_filters:
         pattern = r"( |^|[^\w])" + re.escape(word) + r"( |$|[^\w])"
         if re.search(pattern, text, flags=re.IGNORECASE):
             if user.id in await list_admins(chat_id):
                 return
             try:
-                await message.chat.restrict_member(
-                    user.id,
-                    ChatPermissions(),
-                    until_date=int(time() + 3600),
-                )
-            except Exception:
+                await message.delete()
+            except Exception as e:
+                print(e, "error in blacklist filter")
                 return
-            return await app.send_message(
-                chat_id,
-                f"Muted {user.mention} [`{user.id}`] for 1 hour "
-                + f"due to a blacklist match on {word}.",
-            )
