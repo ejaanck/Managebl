@@ -21,11 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+import html
 import re
 from time import time
 
 from pyrogram import filters
-from pyrogram.types import ChatPermissions
+from pyrogram.enums import ParseMode
+from pyrogram.types import ChatPermissions, Message
 
 from wbb import SUDOERS, app
 from wbb.core.decorators.errors import capture_err
@@ -48,47 +50,35 @@ __HELP__ = """
 
 @app.on_message(filters.command("bl") & ~filters.private)
 @adminsOnly("can_restrict_members")
-async def save_filters(_, message):
-    chat = update.effective_chat
-    user = update.effective_user
-    args = context.args
+async def save_filters(_, message: Message):
+    chat_id = message.chat.id
+    words = message.text.split(None, 1)[1]
+    if not words:
+        words = message.reply_to_message.text if message.reply_to_message else None
+    if not words:
+        return await message.reply_text("What should i blacklist?")
+    if len(words) > 1:
+        text = words
+        to_blacklist = list(
+            {trigger.strip() for trigger in text.split("\n") if trigger.strip()},
+        )
+        for trigger in to_blacklist:
+            await save_blacklist_filter(chat_id, trigger.lower())
 
-    conn = connected(context.bot, update, chat, user.id, need_admin=False)
-    if conn:
-        chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
-    else:
-        if chat.type == "private":
-            return
-        chat_id = update.effective_chat.id
-        chat_name = chat.title
-
-    filter_list = "Current blacklisted words in <b>{}</b>:\n".format(chat_name)
-
-    all_blacklisted = sql.get_chat_blacklist(chat_id)
-
-    if len(args) > 0 and args[0].lower() == "copy":
-        for trigger in all_blacklisted:
-            filter_list += "<code>{}</code>\n".format(html.escape(trigger))
-    else:
-        for trigger in all_blacklisted:
-            filter_list += " - <code>{}</code>\n".format(html.escape(trigger))
-
-    # for trigger in all_blacklisted:
-    #     filter_list += " - <code>{}</code>\n".format(html.escape(trigger))
-
-    split_text = split_message(filter_list)
-    for text in split_text:
-        if filter_list == "Current blacklisted words in <b>{}</b>:\n".format(
-            html.escape(chat_name),
-        ):
-            send_message(
-                update.effective_message,
-                "No blacklisted words in <b>{}</b>!".format(html.escape(chat_name)),
+        if len(to_blacklist) == 1:
+            await message.reply_text(
+                f"Added <code>{html.escape(to_blacklist[0])}</code> to the blacklist filters!",
                 parse_mode=ParseMode.HTML,
             )
-            return
-        send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
+        else:
+            await message.reply_text(
+                f"Added <code>{len(to_blacklist)}</code> triggers to the blacklist filters!",
+                parse_mode=ParseMode.HTML,
+            )
+    else:
+        await message.reply_text(
+            "Usage:\n/bl [triggers] - The words/sentences you want to blacklist",
+        )
 
 @app.on_message(filters.command("blacklisted") & ~filters.private)
 @capture_err
