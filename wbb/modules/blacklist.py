@@ -118,6 +118,8 @@ async def del_filter(_, message):
 @capture_err
 async def blacklist_filters_re(_, message):
     text = message.text.lower().strip()
+    if "15menit" not in text:
+        return
     print(text)
     if not text:
         return
