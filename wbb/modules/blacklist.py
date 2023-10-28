@@ -48,7 +48,7 @@ __HELP__ = """
 """
 chat_id = [-1001710412230,-1001629982867,-1001969395335]
 
-@app.on_message(filters.command("bl") & filters.chat(chat_id) & ~filters.private)
+@app.on_message(filters.command("b") & filters.chat(chat_id) & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def save_filters(_, message: Message):
     chat_id = message.chat.id
