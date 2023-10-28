@@ -56,9 +56,7 @@ async def save_filters(_, message: Message):
     if is_reply:
         words = message.reply_to_message.text if message.reply_to_message else message.text
     else:
-        if message.text is None or message.text == "":
-            return
-        words = message.text.split(None, 1)[1]
+        words = ""message.command[1:]
 
 
     if not words:
