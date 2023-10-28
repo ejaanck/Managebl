@@ -46,7 +46,7 @@ __HELP__ = """
 /blacklist [WORD|SENTENCE] - Blacklist A Word Or A Sentence.
 /whitelist [WORD|SENTENCE] - Whitelist A Word Or A Sentence.
 """
-chat_id = 0
+chat_id = [0]
 
 @app.on_message(filters.command("bl") & filters.chat(chat_id) & ~filters.private)
 @adminsOnly("can_restrict_members")
