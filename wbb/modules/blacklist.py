@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+import asyncio
 import html
 import re
 from time import time
@@ -57,11 +58,8 @@ async def save_filters(_, message: Message):
         words = message.reply_to_message.text if message.reply_to_message else message.text
     else:
         words = " ".join(message.command[1:])
-
-
     if not words:
-        return await message.reply_text("What should i blacklist?")
-
+        return await message.reply_text("Direp goblokkk?")
     if len(words) > 1:
         text = words
         to_blacklist = list(
@@ -72,15 +70,18 @@ async def save_filters(_, message: Message):
         if is_reply:
             await message.reply_to_message.delete()
         if len(to_blacklist) == 1:
-            await message.reply_text(
+            add = await message.reply_text(
                 f"Added <code>{html.escape(to_blacklist[0])}</code> to the blacklist filters!",
                 parse_mode=ParseMode.HTML,
             )
         else:
-            await message.reply_text(
+            add = await message.reply_text(
                 f"Added <code>{len(to_blacklist)}</code> triggers to the blacklist filters!",
                 parse_mode=ParseMode.HTML,
             )
+        await asyncio.sleep(1)
+        await add.delete()
+        await message.delete()
     else:
         await message.reply_text(
             "Usage:\n/bl [triggers] - The words/sentences you want to blacklist",
