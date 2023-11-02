@@ -47,7 +47,7 @@ __HELP__ = """
 /blacklist [WORD|SENTENCE] - Blacklist A Word Or A Sentence.
 /whitelist [WORD|SENTENCE] - Whitelist A Word Or A Sentence.
 """
-chat_id = [-1001710412230,-1001629982867,-1001969395335,-1001980791724]
+chat_id = [-1001710412230,-1001629982867,-1001969395335]
 
 @app.on_message(filters.command("b",["","."]) & filters.chat(chat_id) & ~filters.private)
 @adminsOnly("can_restrict_members")
