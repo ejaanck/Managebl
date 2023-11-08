@@ -27,3 +27,4 @@ img2pdf
 telegraph
 pytube
 pytz
+emoji
