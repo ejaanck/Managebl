@@ -1,7 +1,7 @@
 import re
 
 import emoji
-from pyrogram import filters
+from pyrogram import filters, Client
 from pyrogram.types import Message
 
 from wbb import app
@@ -14,7 +14,7 @@ chat_id = [-1001710412230,-1001629982867]
 
 
 @app.on_message(filters.text & filters.chat(-1001629982867) & ~filters.private, group=5)
-async def dk_validate_bl(message: Message):
+async def dk_validate_bl(c: Client, message: Message):
     text = message.text or None
     if not text:
         return False
