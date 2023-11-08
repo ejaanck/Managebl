@@ -18,7 +18,6 @@ chat_id = [-1001710412230,-1001629982867]
 async def dk_validate_bl(c: Client, message: Message):
     try:
         text = message.text or None
-        print(text)
         if not text:
             return False
         # remove emojis first
@@ -36,17 +35,16 @@ async def dk_validate_bl(c: Client, message: Message):
         text_2 = ""
         for part in text_parts:
             text_2 += part
-        print(text_2)
 
         # remove numbers from text
         text_3 = re.sub(r'[0-9]+', '', text_2)
-        print(text_3)
         #check if text is uppercase
         # text_4 = text_3.isupper()
         # check if text uppercase is more than lowercase
         text_5 = sum(1 for c in text_3 if c.isupper()) > sum(1 for c in text_3 if c.islower())
-        print(text_5)
-        return text_5
+        if text_5:
+            await message.delete()
+            return True
     except Exception as e:
         print(traceback.format_exc())
         return False
