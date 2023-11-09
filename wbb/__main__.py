@@ -83,7 +83,7 @@ async def start_bot():
     restart_data = await clean_restart_stage()
 
     try:
-        log.info("Sending online status")
+        log.info("Sending online status aht")
         if restart_data:
             await app.edit_message_text(
                 restart_data["chat_id"],
