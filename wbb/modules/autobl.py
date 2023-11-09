@@ -11,6 +11,9 @@ __MODULE__ = "Auto"
 __HELP__ = """
 /ah ah 
 """
+
+from wbb.modules.admin import list_admins
+
 chat_id = [-1001710412230,-1001629982867]
 
 
@@ -18,6 +21,8 @@ chat_id = [-1001710412230,-1001629982867]
 async def dk_validate_bl(c: Client, message: Message):
     try:
         text = message.text or None
+        if message.from_user.id in await list_admins(message.chat.id):
+            return
         if not text:
             return False
         # remove emojis first
