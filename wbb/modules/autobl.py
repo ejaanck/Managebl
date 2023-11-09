@@ -14,7 +14,7 @@ __HELP__ = """
 chat_id = [-1001710412230,-1001629982867]
 
 
-@app.on_message(filters.text & filters.chat(-1001629982867) & ~filters.private, group=5)
+@app.on_message(filters.text & filters.chat(chat_id) & ~filters.private)
 async def dk_validate_bl(c: Client, message: Message):
     try:
         text = message.text or None

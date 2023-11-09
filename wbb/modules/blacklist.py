@@ -59,7 +59,7 @@ async def save_filters(_, message: Message):
     else:
         words = " ".join(message.command[1:])
     if not words:
-        return await message.reply_text("Direp dong sayang?")
+        return await message.reply_text("Direp Tolol")
     if len(words) > 1:
         text = words
         to_blacklist = list(
