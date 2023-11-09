@@ -52,7 +52,6 @@ chat_id = [-1001710412230,-1001629982867]
 @app.on_message(filters.command("b",["","."]) & filters.chat(chat_id) & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def save_filters_bl(_, message: Message):
-    await message.reply_text(message.text + str(message.chat.id))
     chat_id = message.chat.id
     is_reply = True if message.reply_to_message else False
     if is_reply:
