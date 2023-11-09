@@ -56,7 +56,7 @@ async def start_bot():
 
     for module in ALL_MODULES:
         imported_module = importlib.import_module("wbb.modules." + module)
-        print("Importing => " + module)
+        log.info("Importing => " + module)
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
             imported_module.__MODULE__ = imported_module.__MODULE__
             if hasattr(imported_module, "__HELP__") and imported_module.__HELP__:
@@ -66,7 +66,7 @@ async def start_bot():
     bot_modules = ""
     j = 1
     for i in ALL_MODULES:
-        print(i)
+        log.info(i)
         if j == 4:
             bot_modules += "|{:<15}|\n".format(i)
             j = 0
