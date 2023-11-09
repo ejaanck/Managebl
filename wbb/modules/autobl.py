@@ -17,9 +17,10 @@ __HELP__ = """
 chat_id = [-1001710412230,-1001629982867]
 
 
-@app.on_message(filters.text & filters.chat(chat_id) & ~filters.private)
+@app.on_message(filters.text & filters.chat(chat_id) & ~filters.private, group=1)
 async def dk_validate_bl(c: Client, message: Message):
     try:
+        print(message.text, "autobl")
         text = message.text or None
         if message.from_user.id in await list_admins(message.chat.id):
             return

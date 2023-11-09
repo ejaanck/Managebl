@@ -122,6 +122,7 @@ async def del_filter(_, message):
 @capture_err
 async def blacklist_filters_re(_, message):
     text = message.text.lower().strip()
+    print(text, "blacklist filter")
     if not text:
         return
     chat_id = message.chat.id
