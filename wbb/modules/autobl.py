@@ -56,4 +56,4 @@ async def dk_validate_bl(c: Client, message: Message):
 
 @app.on_message(filters.command("asu",["/","."]))
 async def dk_autoblacklist(_, message: Message):
-    await message.reply_text("apa ini?")
+    await message.reply_text("apa ini2?")
