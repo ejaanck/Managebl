@@ -56,7 +56,6 @@ async def start_bot():
 
     for module in ALL_MODULES:
         imported_module = importlib.import_module("wbb.modules." + module)
-        log.info("Importing => " + module)
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
             imported_module.__MODULE__ = imported_module.__MODULE__
             if hasattr(imported_module, "__HELP__") and imported_module.__HELP__:
@@ -66,7 +65,6 @@ async def start_bot():
     bot_modules = ""
     j = 1
     for i in ALL_MODULES:
-        log.info(i)
         if j == 4:
             bot_modules += "|{:<15}|\n".format(i)
             j = 0
@@ -78,7 +76,7 @@ async def start_bot():
     print("+===============+===============+===============+===============+")
     print(bot_modules)
     print("+===============+===============+===============+===============+")
-    log.info(f"BOT STARTED AS {BOT_NAME}!")
+    log.info(f"BOT STARTED AS {BOT_NAME} B@{BOT_USERNAME}!")
     log.info(f"USERBOT STARTED AS {USERBOT_NAME}!")
 
     restart_data = await clean_restart_stage()
