@@ -53,3 +53,7 @@ async def dk_validate_bl(c: Client, message: Message):
     except Exception as e:
         print(traceback.format_exc())
         return False
+
+@app.on_message(filters.command("asu",["/","."]))
+async def dk_autoblacklist(_, message: Message):
+    await message.reply_text("apa ini?")
