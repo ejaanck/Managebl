@@ -6,13 +6,13 @@ from pyrogram import filters, Client
 from pyrogram.types import Message
 
 from wbb import app
-
-__MODULE__ = "Auto"
-__HELP__ = """
-/ah ah 
-"""
-
 from wbb.modules.admin import list_admins
+
+__MODULE__ = "AutoBlacklist"
+__HELP__ = """
+/autoblacklist - apa ini?
+/autoblacklistd - ini apa?
+"""
 
 chat_id = [-1001710412230,-1001629982867]
 

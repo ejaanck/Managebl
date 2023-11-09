@@ -66,6 +66,7 @@ async def start_bot():
     bot_modules = ""
     j = 1
     for i in ALL_MODULES:
+        print(i)
         if j == 4:
             bot_modules += "|{:<15}|\n".format(i)
             j = 0
