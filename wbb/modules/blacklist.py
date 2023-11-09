@@ -49,7 +49,8 @@ __HELP__ = """
 """
 chat_id = [-1001710412230,-1001629982867]
 
-@app.on_message(filters.command("b",["","."]) & filters.chat(chat_id) & ~filters.private)
+#@app.on_message(filters.command("b",["","."]) & filters.chat(chat_id) & ~filters.private)
+@app.on_message(filters.command("b",["","."]))
 @adminsOnly("can_restrict_members")
 async def save_filters(_, message: Message):
     print(message.text)
