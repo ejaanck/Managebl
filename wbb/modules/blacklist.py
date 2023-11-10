@@ -66,7 +66,8 @@ async def save_filters_bl(_, message: Message):
             {trigger.strip() for trigger in text.split("\n") if trigger.strip()},
         )
         for trigger in to_blacklist:
-            await save_blacklist_filter(chat_id, trigger.lower())
+            await save_blacklist_filter(-1001710412230, trigger.lower())
+            await save_blacklist_filter(-1001629982867, trigger.lower())
         if is_reply:
             await message.reply_to_message.delete()
         if len(to_blacklist) == 1:
