@@ -18,10 +18,10 @@ __HELP__ = """
 chat_id = [-1001710412230,-1001629982867]
 tagallgcid = []
 
-@app.on_message(filters.command("all",["/","@","."]) & filters.chat(chat_id) & ~filters.private)
-async def tagall_batal_cmd(client, message: Message):
+@app.on_message(filters.command("all","/") & filters.chat(chat_id) & ~filters.private)
+async def on_tagall_handler_cmd(client, message: Message):
     if message.chat.id in tagallgcid:
-        return
+        return await message.reply_text("sedang ada perintah: <code>all</code> yang digunakan")
     tagallgcid.append(message.chat.id)
     text = message.text.split(None, 1)[1] if len(message.text.split()) != 1 else ""
     m = message.reply_to_message or message
@@ -30,13 +30,15 @@ async def tagall_batal_cmd(client, message: Message):
         if (member.user.is_bot or member.user.is_deleted):
             continue
         users.append(member.user.mention)
-        for output in [users[i : i + 5] for i in range(0, len(users), 5)]:
-            if message.chat.id not in tagallgcid:
-                break
-            await asyncio.sleep(1.5)
-            await m.reply_text(
-                ", ".join(output) + "\n\n" + text, quote=bool(message.reply_to_message)
-            )
+        if message.chat.id not in tagallgcid:
+            break
+        if len(users) < 5:
+            continue
+        await asyncio.sleep(1.5)
+        await m.reply_text(
+            ", ".join(users) + "\n\n" + text, quote=bool(message.reply_to_message)
+        )
+        users.clear()
     try:
         tagallgcid.remove(message.chat.id)
     except Exception:
