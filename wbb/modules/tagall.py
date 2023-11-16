@@ -15,11 +15,16 @@ __HELP__ = """
 /all atau @all - To tag all of members.
 /stoptg - To stop tagging.
 """
+
+from wbb.modules.admin import list_admins
+
 chat_id = [-1001710412230,-1001629982867]
 tagallgcid = []
 
 @app.on_message(filters.command("all","/") & filters.chat(chat_id) & ~filters.private)
 async def on_tagall_handler_cmd(client, message: Message):
+    if message.from_user.id in (await list_admins(message.chat.id)):
+        return
     if message.chat.id in tagallgcid:
         return await message.reply_text("sedang ada perintah: <code>all</code> yang digunakan")
     tagallgcid.append(message.chat.id)
