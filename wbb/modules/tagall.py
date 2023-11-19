@@ -23,7 +23,7 @@ tagallgcid = []
 
 @app.on_message(filters.command("all","/") & filters.chat(chat_id) & ~filters.private)
 async def on_tagall_handler_cmd(client, message: Message):
-    if message.from_user.id in (await list_admins(message.chat.id)):
+    if message.from_user.id not in (await list_admins(message.chat.id)):
         return
     if message.chat.id in tagallgcid:
         return await message.reply_text("sedang ada perintah: <code>all</code> yang digunakan")
@@ -52,6 +52,8 @@ async def on_tagall_handler_cmd(client, message: Message):
 
 @app.on_message(filters.command("stoptg",["/","."]) & filters.chat(chat_id) & ~filters.private)
 async def on_stop_tag_handler(c: Client, m: Message):
+    if m.from_user.id not in (await list_admins(m.chat.id)):
+        return
     if m.chat.id not in tagallgcid:
         return await m.reply_text(
             "sedang tidak ada perintah: <code>all</code> yang digunakan"
