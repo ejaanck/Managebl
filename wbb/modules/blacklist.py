@@ -54,8 +54,7 @@ chat_id = [-1001710412230,-1001629982867]
 async def save_filters_bl(_, message: Message):
     user = message.from_user
     admin_list = await list_admins(message.chat.id)
-    print(user.id, admin_list)
-    if user.id in (await list_admins(message.chat.id)):
+    if user.id not in admin_list:
         return
     chat_id = message.chat.id
     is_reply = True if message.reply_to_message else False
