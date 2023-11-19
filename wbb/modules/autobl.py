@@ -14,7 +14,7 @@ __HELP__ = """
 /autoblacklistd - ini apa?
 """
 
-chat_id = [-1001710412230,-1001629982867]
+chat_id = [-1001710412230, -1001629982867]
 
 
 @app.on_message(filters.text & filters.chat(chat_id) & ~filters.private, group=1)
