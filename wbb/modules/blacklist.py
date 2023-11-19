@@ -53,6 +53,8 @@ chat_id = [-1001710412230,-1001629982867]
 #@adminsOnly("can_restrict_members")
 async def save_filters_bl(_, message: Message):
     user = message.from_user
+    admin_list = await list_admins(message.chat.id)
+    print(user.id, admin_list)
     if user.id in (await list_admins(message.chat.id)):
         return
     chat_id = message.chat.id
