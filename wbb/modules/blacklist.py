@@ -96,7 +96,6 @@ async def save_filters_bl(_, message: Message):
 #@capture_err
 async def get_filterss(_, message):
     data = await get_blacklisted_words(message.chat.id)
-    print(data)
     if not data:
         await message.reply_text("**No blacklisted words in this chat.**")
     else:
@@ -137,6 +136,7 @@ async def blacklist_filters_re(_, message):
     for word in list_of_filters:
         pattern = r"( |^|[^\w])" + re.escape(word) + r"( |$|[^\w])"
         if re.search(pattern, text, flags=re.IGNORECASE):
+            print("TERDETEKSI P", word, text)
             if user.id in await list_admins(chat_id):
                 return
             try:
