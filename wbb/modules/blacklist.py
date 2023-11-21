@@ -96,6 +96,7 @@ async def save_filters_bl(_, message: Message):
 #@capture_err
 async def get_filterss(_, message):
     data = await get_blacklisted_words(message.chat.id)
+    print(data)
     if not data:
         await message.reply_text("**No blacklisted words in this chat.**")
     else:
