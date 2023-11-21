@@ -93,7 +93,7 @@ async def save_filters_bl(_, message: Message):
         )
 
 @app.on_message(filters.command("blacklisted") & filters.chat(chat_id) & ~filters.private)
-@capture_err
+#@capture_err
 async def get_filterss(_, message):
     data = await get_blacklisted_words(message.chat.id)
     if not data:
