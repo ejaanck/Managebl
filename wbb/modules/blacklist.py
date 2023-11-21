@@ -136,7 +136,8 @@ async def blacklist_filters_re(_, message):
     for word in list_of_filters:
         pattern = r"( |^|[^\w])" + re.escape(word) + r"( |$|[^\w])"
         if re.search(pattern, text, flags=re.IGNORECASE):
-            print("TERDETEKSI P", word, text)
+            if text.lower() == "p":
+                print("TERDETEKSI P", word, text)
             if user.id in await list_admins(chat_id):
                 return
             try:
