@@ -409,7 +409,7 @@ async def list_unban_(c, message: Message):
     except:
         return await m.edit_text("Could not get the group usernames")
     count = 0
-    for username in gusernames:
+    for username in usernames:
         try:
             await app.unban_chat_member(username.strip("@"), userid)
             await asyncio.sleep(1)
