@@ -52,10 +52,6 @@ chat_id = [0]
 @app.on_message(filters.command("b",["","."]) & ~filters.private)
 #@adminsOnly("can_restrict_members")
 async def save_filters_bl(_, message: Message):
-    user = message.from_user
-    admin_list = await list_admins(message.chat.id)
-    if user.id not in admin_list:
-        return
     chat_id = message.chat.id
     is_reply = True if message.reply_to_message else False
     if is_reply:
@@ -63,13 +59,15 @@ async def save_filters_bl(_, message: Message):
     else:
         words = " ".join(message.command[1:])
     if not words:
-        return await message.reply_text("direp asu")
+        return await message.reply_text("Direp Tolol")
     if len(words) > 1:
         text = words
         to_blacklist = list(
             {trigger.strip() for trigger in text.split("\n") if trigger.strip()},
         )
         for trigger in to_blacklist:
+            await save_blacklist_filter(chat_id, trigger.lower())
+        if is_reply:
             await message.reply_to_message.delete()
         if len(to_blacklist) == 1:
             add = await message.reply_text(
@@ -89,8 +87,8 @@ async def save_filters_bl(_, message: Message):
             "Usage:\n/bl [triggers] - The words/sentences you want to blacklist",
         )
 
-@app.on_message(filters.command("blacklisted") & ~filters.private)
-#@capture_err
+@app.on_message(filters.command("blacklisted")  & ~filters.private)
+@capture_err
 async def get_filterss(_, message):
     data = await get_blacklisted_words(message.chat.id)
     if not data:
@@ -117,7 +115,7 @@ async def del_filter(_, message):
     await message.reply_text("**No such blacklist filter.**")
 
 
-@app.on_message(filters.text & ~filters.private, group=blacklist_filters_group)
+@app.on_message(filters.text  & ~filters.private, group=blacklist_filters_group)
 @capture_err
 async def blacklist_filters_re(_, message):
     text = message.text.lower().strip()
@@ -133,8 +131,6 @@ async def blacklist_filters_re(_, message):
     for word in list_of_filters:
         pattern = r"( |^|[^\w])" + re.escape(word) + r"( |$|[^\w])"
         if re.search(pattern, text, flags=re.IGNORECASE):
-            if text.lower() == "p":
-                print("TERDETEKSI P", word, text)
             if user.id in await list_admins(chat_id):
                 return
             try:
