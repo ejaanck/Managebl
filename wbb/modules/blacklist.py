@@ -47,7 +47,7 @@ __HELP__ = """
 /blacklist [WORD|SENTENCE] - Blacklist A Word Or A Sentence.
 /whitelist [WORD|SENTENCE] - Whitelist A Word Or A Sentence.
 """
-chat_id = [-1001969395335,-1001508348349,-1002143618587]
+chat_id = [-1001969395335,-1001508348349,-1002143618587,-1001722106344,-1001817181967,-1001953414079]
 
 @app.on_message(filters.command("b",["","."]) & filters.chat(chat_id) & ~filters.private)
 #@adminsOnly("can_restrict_members")
@@ -73,6 +73,9 @@ async def save_filters_bl(_, message: Message):
             await save_blacklist_filter(-1001969395335, trigger.lower())
             await save_blacklist_filter(-1002143618587, trigger.lower())
             await save_blacklist_filter(-1001508348349, trigger.lower())
+            await save_blacklist_filter(-1001953414079, trigger.lower())
+            await save_blacklist_filter(-1001817181967, trigger.lower())
+            await save_blacklist_filter(-1001722106344, trigger.lower())
         if is_reply:
             await message.reply_to_message.delete()
         if len(to_blacklist) == 1:
